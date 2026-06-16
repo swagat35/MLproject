@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Customer Churn Prediction</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .result-box {
+            text-align: center;
+            background-color: #eef2f7;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            border-left: 5px solid #3498db;
+        }
+        .result-box h3 {
+            margin: 0 0 5px 0;
+            color: #7f8c8d;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        .result-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #34495e;
+        }
+        select, input[type="number"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: #fafafa;
+            transition: border-color 0.3s;
+        }
+        select:focus, input[type="number"]:focus {
+            border-color: #3498db;
+            outline: none;
+            background-color: #fff;
+        }
+        .btn-container {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .submit-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Telco Customer Churn Prediction Panel</h2>
+
+    <!-- Prediction Results Window -->
+    <div class="result-box">
+        <h3>Prediction Result</h3>
+        <div class="result-text">
+            {% if results %}
+                {{ results }}
+            {% else %}
+                Awaiting Form Submission...
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Input Form -->
+    <form action="/predictdata" method="POST">
+        <div class="grid-container">
+            
+            <!-- Demographics -->
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select name="gender" id="gender" required>
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="SeniorCitizen">Senior Citizen</label>
+                <select name="SeniorCitizen" id="SeniorCitizen" required>
+                    <option value="" disabled selected>Is Senior Citizen?</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Partner">Has Partner?</label>
+                <select name="Partner" id="Partner" required>
+                    <option value="" disabled selected>Select Option</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Dependents">Has Dependents?</label>
+                <select name="Dependents" id="Dependents" required>
+                    <option value="" disabled selected>Select Option</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <!-- Services Specs -->
+            <div class="form-group">
+                <label for="PhoneService">Phone Service</label>
+                <select name="PhoneService" id="PhoneService" required>
+                    <option value="" disabled selected>Select Option</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="MultipleLines">Multiple Lines</label>
+                <select name="MultipleLines" id="MultipleLines" required>
+                    <option value="" disabled selected>Select Option</option>
+                    <option value="No phone service">No phone service</option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="InternetService">Internet Service Provider</label>
+                <select name="InternetService" id="InternetService" required>
+                    <option value="" disabled selected>Select Option</option>
+                    <option value="DSL">DSL</option>
+                    <option value="Fiber optic">Fiber optic</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <!-- Security & Features -->
+            <div class="form-group">
+                <label for="OnlineSecurity">Online Security</label>
+                <select name="OnlineSecurity" id="OnlineSecurity" required>
+                    <option value="" disabled selected>Select Option</option>
+                    <option value="No internet service">No internet service</option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="OnlineBackup">Online Backup</label>
+                <select name="OnlineBackup" id="OnlineBackup" required>
+                    <option value="" disabled selected>Select Option</option>
+                    <option value="No internet service">No internet service</option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="DeviceProtection">Device Protection</label>
+                <select name="DeviceProtection" id="DeviceProtection" required>
+                    <option value="" disabled selected>Select Option</option>
+                    <option value="No internet service">No internet service</option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="TechSupport">Tech Support</label>
+                <select name="TechSupport" id="TechSupport" required>
+                    <option value="" disabled selected>Select Option</option>
+                    <option value="No internet service">No internet service</option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+
+            <!-- Media Streams -->
+            <div class="form-group">
+                <label for="StreamingTV">Streaming TV</label>
+                <select name="StreamingTV" id="StreamingTV" required>
+                    <option value="" disabled selected>Select Option</option>
+                    <option value="No internet service">No internet service</option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="StreamingMovies">Streaming Movies</label>
+                <select name="StreamingMovies" id="StreamingMovies" required>
+                    <option value="" disabled selected>Select Option</option>
+                    <option value="No internet service">No internet service</option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+
+            <!-- Contractual Specs -->
+            <div class="form-group">
+                <label for="Contract">Contract Type</label>
+                <select name="Contract" id="Contract" required>
+                    <option value="" disabled selected>Select Contract</option>
+                    <option value="Month-to-month">Month-to-month</option>
+                    <option value="One year">One year</option>
+                    <option value="Two year">Two year</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="PaperlessBilling">Paperless Billing</label>
+                <select name="PaperlessBilling" id="PaperlessBilling" required>
+                    <option value="" disabled selected>Select Option</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="PaymentMethod">Payment Method</label>
+                <select name="PaymentMethod" id="PaymentMethod" required>
+                    <option value="" disabled selected>Select Payment Method</option>
+                    <option value="Electronic check">Electronic check</option>
+                    <option value="Mailed check">Mailed check</option>
+                    <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
+                    <option value="Credit card (automatic)">Credit card (automatic)</option>
+                </select>
+            </div>
+
+            <!-- Continuous Quantitative Variables -->
+            <div class="form-group">
+                <label for="tenure">Tenure (Months)</label>
+                <input type="number" name="tenure" id="tenure" placeholder="e.g. 12" min="0" max="100" required>
+            </div>
+
+            <div class="form-group">
+                <label for="MonthlyCharges">Monthly Charges ($)</label>
+                <input type="number" name="MonthlyCharges" id="MonthlyCharges" step="0.01" placeholder="e.g. 64.85" min="0" required>
+            </div>
+
+            <div class="form-group">
+                <label for="TotalCharges">Total Charges ($)</label>
+                <input type="number" name="TotalCharges" id="TotalCharges" step="0.01" placeholder="e.g. 780.30" min="0" required>
+            </div>
+
+            <!-- Submit Engine Button -->
+            <div class="btn-container">
+                <button type="submit" class="submit-btn">Predict Customer Churn</button>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

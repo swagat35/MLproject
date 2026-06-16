@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Telco Churn Predictor</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .welcome-container {
+            text-align: center;
+            background: #fff;
+            padding: 50px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            max-width: 600px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+        p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            padding: 14px 35px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+        }
+        .cta-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        .cta-button:active {
+            transform: translateY(0);
+        }
+        .features {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid #eee;
+            padding-top: 30px;
+        }
+        .feature-item {
+            font-size: 0.9rem;
+            color: #95a5a6;
+        }
+        .feature-item strong {
+            display: block;
+            color: #34495e;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="welcome-container">
+    <h1>Telco Customer Churn Analytics</h1>
+    <p>
+        Leverage machine learning pipelines to evaluate customer attrition risks. 
+        Input demographic profiles, service utility segments, and financial account terms to run real-time inference scores instantly.
+    </p>
+    
+    <a href="/predictdata" class="cta-button">Open Prediction Dashboard</a>
+
+    <div class="features">
+        <div class="feature-item">
+            <strong>19 Features</strong>
+            Analyzed Real-Time
+        </div>
+        <div class="feature-item">
+            <strong>Pipeline Driven</strong>
+            Scikit-Learn Backend
+        </div>
+        <div class="feature-item">
+            <strong>Instant Metrics</strong>
+            High-Accuracy Risk Scores
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
