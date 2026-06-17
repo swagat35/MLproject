@@ -3,6 +3,12 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from src.pipeline.predict_pipeline import CustomData, PredictPipeline
+import os
+import sys
+
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+if CURRENT_DIR not in sys.path:
+    sys.path.append(CURRENT_DIR)
 
 application = Flask(__name__)
 app = application
@@ -58,4 +64,5 @@ def predict_datapoint():
         return render_template('home.html', results=status)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0",port=8000)
+    port = int(os.environ.get("PORT", 8000))
+    app.run(host="0.0.0.0", port=port)
